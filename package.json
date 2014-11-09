@@ -1,0 +1,11 @@
+{
+  "name": "phaser-platformer",
+  "version": "0.1.0",
+  "devDependencies": {
+    "gulp": "~3.8.5",
+    "gulp-load-plugins": "~0.5.3",
+    "gulp-uglify": "~0.3.1",
+    "gulp-concat": "~2.2.0",
+    "express": "~4.10.1"
+  }
+}
