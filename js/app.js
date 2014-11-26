@@ -15,23 +15,6 @@ window.onload = function () {
 		game.load.spritesheet('baddie', 'assets/baddie.png', 32, 32);
 
 	}
-	Enemy = function () {
-		this.x = game.world.randomX;
-		this.y = game.world.randomY;
-		this.minSpeed = -75;
-		this.maxSpeed = 75;
-		this.vx = Math.random() * (this.maxSpeed - this.minSpeed + 1) - this.minSpeed;
-		this.vy = Math.random() * (this.maxSpeed - this.minSpeed + 1) - this.minSpeed;
-
-		this.enemySprite = game.add.sprite(this.x, this.y, "baddie");
-//		console.log(this.enemySprite.body.collideWorldBounds = true);
-		this.enemySprite.anchor.setTo(0.5, 0.5);
-//			this.enemySprite.body.collideWorldBounds = true;
-		this.enemySprite.body.bounce.setTo(1, 1);
-		this.enemySprite.body.velocity.x = this.vx;
-		this.enemySprite.body.velocity.y = this.vy;
-		this.enemySprite.body.immovable = true;
-	};
 
     
 
@@ -82,12 +65,40 @@ window.onload = function () {
 		player.animations.add('left', [0, 1, 2, 3], 10, true);
 		player.animations.add('right', [5, 6, 7, 8], 10, true);
 
+
+		enemies = game.add.group();
+
+		enemies.enableBody = true;
 		
-		
-		var enemies = [];
         for (var i=0; i<numOfEnemies; i++) {
-			console.log(enemies);
-            enemies.push( new Enemy() );
+        	var enemy = stars.create(i * 10, 0, 'baddie');
+        	// Enable physics on our player
+        	game.physics.arcade.enable(enemy);
+
+        	// Give the enemy some phyics properties - bounce, gravity and whether they can collide
+        	enemy.body.bounce.y = 0.2;
+        	enemy.body.gravity.y = 200;
+        	enemy.body.collideWorldBounds = true;
+
+        	// Add some animations - for walking left and right
+        	enemy.animations.add('left', [0, 1], 10, true);
+        	enemy.animations.add('right', [2, 3], 10, true);
+
+
+            this.x = game.world.randomX;
+            this.y = game.world.randomY;
+            this.minSpeed = -75;
+            this.maxSpeed = 75;
+            this.vx = Math.random() * (this.maxSpeed - this.minSpeed + 1) - this.minSpeed;
+            this.vy = Math.random() * (this.maxSpeed - this.minSpeed + 1) - this.minSpeed;
+
+            this.enemySprite = game.add.sprite(this.x, this.y, "baddie");
+            this.enemySprite.anchor.setTo(0.5, 0.5);
+            this.enemySprite.body.collideWorldBounds = true;
+            this.enemySprite.body.bounce.setTo(1, 1);
+            this.enemySprite.body.velocity.x = this.vx;
+            this.enemySprite.body.velocity.y = this.vy;
+            this.enemySprite.body.immovable = true;
         }
 
 
@@ -108,8 +119,6 @@ window.onload = function () {
 			// Give the start a random bounce
 			star.body.bounce.y = 0.7 + Math.random() * 0.2;
 		}
-
-
 
 		scoreText = game.add.text(16, 16, 'score: 0', {fontSize: '32px', fill: '#000'} )
     };
